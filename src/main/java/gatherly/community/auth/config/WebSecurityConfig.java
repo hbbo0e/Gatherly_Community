@@ -1,19 +1,44 @@
 package gatherly.community.auth.config;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.context.annotation.Configuration;
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
-// TODO 0124, oauth 없이 --> 신선영 blog 참고
+import gatherly.community.auth.service.UserDetailService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.web.SecurityFilterChain;
+
+// TODO 0124, oauth 없이 --> blog 참고
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
 
+  private final UserDetailService userService;
 
-  // TODO 0124 0900 springsecurity 구현 -> passwordencoder, userdetailservice 구현해야 함
+  @Bean
+  public WebSecurityCustomizer configure(){
+    return (web) -> web.ignoring()
+        .requestMatchers(toH2Console())
+        .requestMatchers("/static/**");
+  }
 
-  // TODO 0124 0900 springsecurity 기능 비활성화
-
-  // TODO 0124 0900 특정 HTTP 요청에 대한 웹 기반 보안 구성
+  // ⚠️ disable 리팩토링 필요
+  @Bean
+  public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
+    return http
+        .authorizeRequests() // 인증, 인가 설정
+        .requestMatchers("/auth/signup", "/auth/login").permitAll()
+        .anyRequest().authenticated()
+        .and()
+        .logout() // 로그아웃 설정
+        .logoutSuccessUrl("/login")
+        .invalidateHttpSession(true)
+        .and()
+        .csrf().disable()
+        .build();
+  }
 
 
   // TODO 0124 0900 인증 관리자 관련 설정
