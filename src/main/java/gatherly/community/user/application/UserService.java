@@ -21,7 +21,6 @@ public class UserService {
       throw new IllegalArgumentException("해당 이메일은 이미 가입되어 있어요!");
     }
 
-    // ❓이거 그냥 이렇게 하면 그냥 인코딩 된 거 뿐... 아닌가?
     String encodedPassword = passwordEncoder.encode(user.getPassword());
     User userWithEncodedPassword = User.builder()
         .username(user.getUsername())

@@ -4,12 +4,11 @@ import gatherly.community.user.application.interfaces.UserRepository;
 import gatherly.community.user.domain.User;
 import gatherly.community.user.repository.entity.UserEntity;
 import gatherly.community.user.repository.jpa.JpaUserRepository;
+import java.util.Optional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-/**
- * 💭
- */
+
 @Repository
 @AllArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -36,6 +35,11 @@ public class UserRepositoryImpl implements UserRepository {
         .followerCount(entity.getFollowerCount())
         .followingCount(entity.getFollowingCount())
         .build();
+  }
+
+  @Override
+  public Optional<User> findByEmail(String email) {
+    return Optional.empty();
   }
 
   @Override
