@@ -33,7 +33,15 @@ spring:
 
 logging:
   level:
-    org.springframework: DEBUG
+    org.hibernate.type: TRACE
+    org.hibernate.orm.jdbc.bind: TRACE
+    org.hibernate.engine.transaction.internal.TransactionImpl: DEBUG
+    org.springframework.orm.jpa: DEBUG
+    org.springframework.transaction: DEBUG
+
+  security:
+    user.name: user
+    user.password: password
 
 # security:
 #   oauth2:

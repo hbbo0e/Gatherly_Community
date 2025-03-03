@@ -39,10 +39,10 @@ public class UserEntity {
   @Column(nullable = true)
   private String profileImage;
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer followerCount; // community_feed
 
-  @Column(nullable = false)
+  @Column(nullable = true)
   private Integer followingCount; // community_feed
 
 
